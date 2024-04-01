@@ -1,7 +1,7 @@
 CREATE TABLE department
 (
   id                   INTEGER NOT NULL PRIMARY KEY,
-  department_name      VARCHAR(20) NOT NULL,
+  department_name      VARCHAR(20) NOT NULL UNIQUE,
   budget_places        INTEGER NOT NULL DEFAULT 0,
   paid_places          INTEGER NOT NULL DEFAULT 0,
   subject_1_id         INTEGER NOT NULL,

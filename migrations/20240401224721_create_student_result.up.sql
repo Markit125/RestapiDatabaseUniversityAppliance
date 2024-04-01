@@ -2,7 +2,7 @@
 CREATE TABLE exam_subject
 (
   id                   INTEGER NOT NULL PRIMARY KEY,
-  exam_subject_name    VARCHAR(20) NOT NULL
+  exam_subject_name    VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE result

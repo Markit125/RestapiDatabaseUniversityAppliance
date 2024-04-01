@@ -6,7 +6,7 @@ CREATE TABLE students
   student_last_name    VARCHAR(20) NOT NULL,
   birth_date           DATE NOT NULL,
   achievements         INTEGER NOT NULL DEFAULT 0,
-  passport             VARCHAR(20) NOT NULL
+  passport             VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE UNIQUE INDEX passport_student ON students
