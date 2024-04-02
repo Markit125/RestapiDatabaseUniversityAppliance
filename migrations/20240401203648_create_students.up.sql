@@ -1,6 +1,6 @@
 CREATE TABLE students
 (
-  id           INTEGER NOT NULL PRIMARY KEY,
+  id           BIGSERIAL NOT NULL PRIMARY KEY,
   first_name   VARCHAR(20) NOT NULL,
   middle_name  VARCHAR(20) NOT NULL,
   last_name    VARCHAR(20) NOT NULL,

@@ -1,6 +1,6 @@
 CREATE TABLE applience
 (
-  id                   INTEGER NOT NULL PRIMARY KEY,
+  id                   BIGSERIAL NOT NULL PRIMARY KEY,
   student_id           INTEGER NOT NULL,
   department_id        INTEGER NOT NULL,
   exam_subject_1_id    INTEGER NOT NULL,

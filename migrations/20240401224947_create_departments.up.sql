@@ -1,6 +1,6 @@
 CREATE TABLE department
 (
-  id                   INTEGER NOT NULL PRIMARY KEY,
+  id                   BIGSERIAL NOT NULL PRIMARY KEY,
   department_name      VARCHAR(20) NOT NULL UNIQUE,
   budget_places        INTEGER NOT NULL DEFAULT 0,
   paid_places          INTEGER NOT NULL DEFAULT 0,
