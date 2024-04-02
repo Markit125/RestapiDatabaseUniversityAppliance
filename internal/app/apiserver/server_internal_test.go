@@ -144,7 +144,6 @@ func TestServer_AuthenticateUser(t *testing.T) {
 	secureCookie := securecookie.New(secretKey, nil)
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		fmt.Println(r)
 	})
 
 	for _, tc := range testCases {

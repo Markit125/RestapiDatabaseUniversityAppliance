@@ -65,7 +65,6 @@ func (s *server) configureRouter() {
 	private.HandleFunc("/whoami", s.handleWhoAmI()).Methods("GET")
 
 	private.HandleFunc("/students", s.handleStudentsCreate()).Methods("POST")
-
 }
 
 func (s *server) setRequestID(next http.Handler) http.Handler {
