@@ -28,3 +28,15 @@ Origin: google.com
 }
 
 ###
+
+POST http://localhost:8080/private/students HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "Mark",
+    "middle_name": "Ivanovich",
+    "last_name": "Tarabukin",
+    "birth_date": "11-05-2003",
+    "achievements": 0,
+    "passport": "5451535825"
+}

@@ -1,2 +1,2 @@
-DROP TABLE exam_subject;
-DROP TABLE result;
+DROP TABLE IF EXISTS exam_subject;
+DROP TABLE IF EXISTS result;

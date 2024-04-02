@@ -7,7 +7,8 @@ import (
 
 // Store ...
 type Store struct {
-	userRepository *UserRepository
+	userRepository    *UserRepository
+	studentRepository *StudentRepository
 }
 
 // New ...
@@ -25,4 +26,16 @@ func (s *Store) User() store.UserRepository {
 	}
 
 	return s.userRepository
+}
+
+// Student ...
+func (s *Store) Student() store.StudentRepository {
+	if s.studentRepository == nil {
+		s.studentRepository = &StudentRepository{
+			store:    s,
+			students: make(map[int]*model.Student),
+		}
+	}
+
+	return s.studentRepository
 }

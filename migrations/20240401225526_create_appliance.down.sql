@@ -1,1 +1,1 @@
-DROP TABLE applience;
+DROP TABLE IF EXISTS applience;

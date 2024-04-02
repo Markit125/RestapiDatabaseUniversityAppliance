@@ -9,6 +9,9 @@ CREATE TABLE result
 (
   id                   INTEGER NOT NULL PRIMARY KEY,
   result_score         INTEGER NOT NULL,
-  student_id           INTEGER NOT NULL FOREIGN KEY REFERENCES students(id),
-  exam_subject_id      INTEGER NOT NULL FOREIGN KEY REFERENCES exam_subject(id)
+  student_id           INTEGER NOT NULL,
+  exam_subject_id      INTEGER NOT NULL,
+
+  FOREIGN KEY (student_id) REFERENCES students(id),
+  FOREIGN KEY (exam_subject_id) REFERENCES exam_subject(id)
 );

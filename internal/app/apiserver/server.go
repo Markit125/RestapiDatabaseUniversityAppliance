@@ -65,6 +65,8 @@ func (s *server) configureRouter() {
 	private.Use(s.authenticateUser)
 	private.HandleFunc("/whoami", s.handleWhoAmI()).Methods("GET")
 
+	private.HandleFunc("/students", s.handleStudentsCreate()).Methods("POST")
+
 }
 
 func (s *server) setRequestID(next http.Handler) http.Handler {
@@ -101,6 +103,43 @@ func (s *server) logRequest(next http.Handler) http.Handler {
 
 	})
 }
+
+func (s *server) handleStudentsCreate() http.HandlerFunc {
+	type request struct {
+		// Email    string `json:"email"`
+		// Password string `json:"password"`
+		FirstName    string `json:"first_name"`
+		MiddleName   string `json:"middle_name"`
+		LastName     string `json:"last_name"`
+		BirthDate    string `json:"birht_date"`
+		Achievements int    `json:"achievements"`
+		Passport     string `json:"passport"`
+	}
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		req := &request{}
+		if err := json.NewDecoder(r.Body).Decode(req); err != nil {
+			s.error(w, r, http.StatusBadRequest, err)
+			return
+		}
+
+		student := &model.Student{
+			FirstName:    req.FirstName,
+			MiddleName:   req.MiddleName,
+			LastName:     req.LastName,
+			BirthDate:    req.BirthDate,
+			Achievements: req.Achievements,
+		}
+
+		if err := s.store.Student().Create(student); err != nil {
+			s.error(w, r, http.StatusUnprocessableEntity, err)
+			return
+		}
+
+		s.respond(w, r, http.StatusCreated, student)
+	}
+}
+
 func (s *server) handleWhoAmI() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		s.respond(w, r, http.StatusOK, r.Context().Value(ctxKeyUser).(*model.User))
