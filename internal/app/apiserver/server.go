@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"http-rest-api/internal/app/apiserver/store"
 	"http-rest-api/internal/app/model"
 	"net/http"
@@ -106,12 +105,10 @@ func (s *server) logRequest(next http.Handler) http.Handler {
 
 func (s *server) handleStudentsCreate() http.HandlerFunc {
 	type request struct {
-		// Email    string `json:"email"`
-		// Password string `json:"password"`
 		FirstName    string `json:"first_name"`
 		MiddleName   string `json:"middle_name"`
 		LastName     string `json:"last_name"`
-		BirthDate    string `json:"birht_date"`
+		BirthDate    string `json:"birth_date"`
 		Achievements int    `json:"achievements"`
 		Passport     string `json:"passport"`
 	}
@@ -129,6 +126,7 @@ func (s *server) handleStudentsCreate() http.HandlerFunc {
 			LastName:     req.LastName,
 			BirthDate:    req.BirthDate,
 			Achievements: req.Achievements,
+			Passport:     req.Passport,
 		}
 
 		if err := s.store.Student().Create(student); err != nil {
@@ -193,8 +191,6 @@ func (s *server) authenticateUser(next http.Handler) http.Handler {
 			s.error(w, r, http.StatusUnauthorized, errNotAuthenticated)
 			return
 		}
-
-		fmt.Println(r)
 
 		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), ctxKeyUser, u)))
 	})

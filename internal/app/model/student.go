@@ -10,7 +10,7 @@ type Student struct {
 	FirstName    string `json:"first_name"`
 	MiddleName   string `json:"middle_name"`
 	LastName     string `json:"last_name"`
-	BirthDate    string `json:"birht_date"`
+	BirthDate    string `json:"birth_date"`
 	Achievements int    `json:"achievements"`
 	Passport     string `json:"passport"`
 }
