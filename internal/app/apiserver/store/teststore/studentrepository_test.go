@@ -26,9 +26,10 @@ func TestStudentRepository_FindByPassport(t *testing.T) {
 	_, err := s.Student().FindByPassport(passport)
 	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
 
-	s.Student().Create(model.TestStudent(t))
+	student := model.TestStudent(t)
+	s.Student().Create(student)
 
-	u, err := s.Student().FindByPassport(passport)
+	u, err := s.Student().FindByPassport(student.Passport)
 	assert.NoError(t, err)
 	assert.NotNil(t, u)
 }
