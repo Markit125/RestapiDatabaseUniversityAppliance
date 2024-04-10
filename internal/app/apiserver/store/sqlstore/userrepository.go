@@ -30,6 +30,16 @@ func (r *UserRepository) Create(u *model.User) error {
 	).Scan(&u.ID)
 }
 
+// AddStudent ...
+func (r *UserRepository) AddStudentID(u *model.User, id int) error {
+
+	return r.store.db.QueryRow(
+		"UPDATE users SET student_id=$1 WHERE id=$2 RETURNING student_id",
+		id,
+		u.ID,
+	).Scan(&u.StudentID)
+}
+
 // FindByEmail ...
 func (r *UserRepository) FindByEmail(email string) (*model.User, error) {
 	u := &model.User{}

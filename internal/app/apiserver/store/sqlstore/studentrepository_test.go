@@ -21,6 +21,20 @@ func TestStudentRepository_Create(t *testing.T) {
 	assert.NotNil(t, student)
 }
 
+func TestStudentRepository_Delete(t *testing.T) {
+	db, teardown := sqlstore.TestDB(t, databaseURL)
+	defer teardown("students")
+
+	s := sqlstore.New(db)
+
+	student := model.TestStudent(t)
+
+	s.Student().Create(student)
+
+	err := s.Student().Delete(student)
+	assert.NoError(t, err)
+}
+
 func TestStudentRepository_FindByPassport(t *testing.T) {
 	db, teardown := sqlstore.TestDB(t, databaseURL)
 	defer teardown("students")

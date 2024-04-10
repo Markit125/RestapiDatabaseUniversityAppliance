@@ -22,6 +22,12 @@ func (r *StudentRepository) Create(s *model.Student) error {
 	return nil
 }
 
+// Delete ...
+func (r *StudentRepository) Delete(s *model.Student) error {
+	delete(r.students, s.ID)
+	return nil
+}
+
 // FindByEmail ...
 func (r *StudentRepository) FindByPassport(passport string) (*model.Student, error) {
 	for _, student := range r.students {

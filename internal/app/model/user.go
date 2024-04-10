@@ -12,6 +12,7 @@ type User struct {
 	Email             string `json:"email"`
 	Password          string `json:"password,omitempty"`
 	EncryptedPassword string `json:"-"`
+	StudentID         int    `json:"student_id"`
 }
 
 // Validate ...

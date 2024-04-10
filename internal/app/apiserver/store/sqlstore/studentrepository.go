@@ -32,7 +32,21 @@ func (r *StudentRepository) Create(s *model.Student) error {
 	).Scan(&s.ID)
 
 	return err
+}
 
+// Delete ...
+func (r *StudentRepository) Delete(s *model.Student) error {
+
+	if err := s.Validate(); err != nil {
+		return err
+	}
+
+	err := r.store.db.QueryRow(
+		"DELETE FROM students WHERE id=$1",
+		s.ID,
+	).Err()
+
+	return err
 }
 
 // FindByPassport ...

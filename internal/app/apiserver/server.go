@@ -60,11 +60,16 @@ func (s *server) configureRouter() {
 	s.router.HandleFunc("/users", s.handleUsersCreate()).Methods("POST")
 	s.router.HandleFunc("/sessions", s.handleSessionCreate()).Methods("POST")
 
+	s.router.HandleFunc("/departments", s.handleDepartmentsView()).Methods("GET")
+	s.router.HandleFunc("/departments", s.handle()).Methods("GET")
+
 	private := s.router.PathPrefix("/private").Subrouter()
 	private.Use(s.authenticateUser)
 	private.HandleFunc("/whoami", s.handleWhoAmI()).Methods("GET")
 
 	private.HandleFunc("/students", s.handleStudentsCreate()).Methods("POST")
+	private.HandleFunc("/students", s.handleApplianceCreate()).Methods("POST")
+
 }
 
 func (s *server) setRequestID(next http.Handler) http.Handler {
@@ -102,6 +107,26 @@ func (s *server) logRequest(next http.Handler) http.Handler {
 	})
 }
 
+func (s *server) handleApplianceCreate() http.HandlerFunc {
+	type request struct {
+		DepartmentName string `json:"department_name"`
+	}
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		req := &request{}
+		if err := json.NewDecoder(r.Body).Decode(req); err != nil {
+			s.error(w, r, http.StatusBadRequest, err)
+			return
+		}
+
+		user := r.Context().Value(ctxKeyUser).(*model.User)
+
+		appliance := &model.Appliance{
+			DepartmentName: req.DepartmentName,
+		}
+	}
+}
+
 func (s *server) handleStudentsCreate() http.HandlerFunc {
 	type request struct {
 		FirstName    string `json:"first_name"`
@@ -128,7 +153,20 @@ func (s *server) handleStudentsCreate() http.HandlerFunc {
 			Passport:     req.Passport,
 		}
 
+		user := r.Context().Value(ctxKeyUser).(*model.User)
+
 		if err := s.store.Student().Create(student); err != nil {
+			s.error(w, r, http.StatusUnprocessableEntity, err)
+			return
+		}
+
+		if err := s.store.User().AddStudentID(user, student.ID); err != nil {
+
+			if err := s.store.Student().Delete(student); err != nil {
+				s.error(w, r, http.StatusInternalServerError, err)
+				return
+			}
+
 			s.error(w, r, http.StatusUnprocessableEntity, err)
 			return
 		}

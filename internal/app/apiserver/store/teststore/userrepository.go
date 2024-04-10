@@ -26,6 +26,18 @@ func (r *UserRepository) Create(u *model.User) error {
 	return nil
 }
 
+// AddStudentID
+func (r *UserRepository) AddStudentID(u *model.User, id int) error {
+	_, ok := r.users[u.ID]
+	if !ok {
+		return store.ErrRecordNotFound
+	}
+
+	r.users[u.ID].StudentID = id
+
+	return nil
+}
+
 // FindByEmail ...
 func (r *UserRepository) FindByEmail(email string) (*model.User, error) {
 	for _, user := range r.users {

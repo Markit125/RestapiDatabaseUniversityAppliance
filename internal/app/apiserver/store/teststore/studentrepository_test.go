@@ -12,9 +12,22 @@ import (
 // Create ...
 func TestStudentRepository_Create(t *testing.T) {
 	s := teststore.New()
-	u := model.TestStudent(t)
-	assert.NoError(t, s.Student().Create(u))
-	assert.NotNil(t, u)
+	student := model.TestStudent(t)
+	assert.NoError(t, s.Student().Create(student))
+	assert.NotNil(t, student)
+}
+
+// Delete
+func TestStudentRepository_Delete(t *testing.T) {
+	s := teststore.New()
+	student := model.TestStudent(t)
+
+	err := s.Student().Delete(student)
+	assert.NoError(t, err)
+
+	student, err = s.Student().Find(student.ID)
+	assert.EqualError(t, err, store.ErrRecordNotFound.Error())
+	assert.Nil(t, student)
 }
 
 // FindByPassport ...
