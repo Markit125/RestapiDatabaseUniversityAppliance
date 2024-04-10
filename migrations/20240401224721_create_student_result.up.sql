@@ -1,14 +1,14 @@
 
 CREATE TABLE exam_subject
 (
-  id                   BIGSERIAL NOT NULL PRIMARY KEY,
-  exam_subject_name    VARCHAR(20) NOT NULL UNIQUE
+  id              BIGSERIAL NOT NULL PRIMARY KEY,
+  subject_name    VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE result
 (
   id                   BIGSERIAL NOT NULL PRIMARY KEY,
-  result_score         INTEGER NOT NULL,
+  score                INTEGER NOT NULL,
   student_id           INTEGER NOT NULL,
   exam_subject_id      INTEGER NOT NULL,
 
