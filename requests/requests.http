@@ -40,3 +40,17 @@ Content-Type: application/json
     "achievements": 0,
     "passport": "5451535825"
 }
+
+###
+
+POST http://localhost:8080/private/students HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "Giant",
+    "middle_name": "Brant",
+    "last_name": "Elegiant",
+    "birth_date": "01-01-2003",
+    "achievements": 10,
+    "passport": "1111111111"
+}
